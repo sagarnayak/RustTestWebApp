@@ -11,9 +11,3 @@ mod test_case_set_one {
         assert_eq!(2, 1 + 1);
     }
 }
-
-    #[test]
-    fn test_three() {
-        assert_eq!(2, 1 + 2);
-    }
-}
