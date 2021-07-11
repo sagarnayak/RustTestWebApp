@@ -1,3 +1,3 @@
-# Awesome Rust [![build badge](https://github.com/sagarnayak/RustTestWebApp/workflows/rust.yml/badge.svg?branch=master)](https://github.com/sagarnayak/RustTestWebApp/workflows/rust.yml)
+# Awesome Rust [![build badge](https://github.com/sagarnayak/RustTestWebApp/workflows/Rust/badge.svg?branch=master)](https://github.com/sagarnayak/RustTestWebApp/actions)
 
 Rust Web app demo.
