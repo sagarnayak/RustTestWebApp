@@ -2,13 +2,9 @@ extern crate rocket;
 
 
 mod test_case_set_one {
-    use rocket::{Build, Rocket};
     use rocket::http::Status;
-    use rocket::local::blocking::Client;
 
-    use crate::controllers::error_handlers::not_found;
-    use crate::controllers::routes;
-    use crate::database::database_master;
+    use crate::core::rocket_master::rocket;
 
     use super::rocket;
 
@@ -23,19 +19,28 @@ mod test_case_set_one {
         assert_eq!(2, 1 + 1);
     }
 
-    fn rocket() -> Rocket<Build> {
-        rocket::build()
-            .register("/", catchers![not_found])
-            .mount("/", routes::get_routes())
-            .manage(database_master::get_db_pools())
-    }
-
     #[test]
     fn rocket_test() {
+        use rocket::local::blocking::Client;
         let client = Client::tracked(rocket()).expect("valid rocket instance");
         let response = client.get("/").dispatch();
 
         assert_eq!(response.status(), Status::Ok);
         assert_eq!(response.into_string(), Some("Hello!".into()));
+    }
+
+    #[rocket::async_test]
+    async fn rocket_test_async() {
+        use rocket::local::asynchronous::Client;
+        let client = Client::tracked(rocket()).await.unwrap();
+        let req = client.get("/blockingTask");
+
+        let (r1, r2) = rocket::tokio::join!(req.clone().dispatch(), req.dispatch());
+        assert_eq!(r1.status(), r2.status());
+        assert_eq!(r1.status(), Status::Ok);
+
+        let (s1, s2) = (r1.into_string().await, r2.into_string().await);
+        assert_eq!(s1, s2);
+        assert_eq!(s1.unwrap(), "Done .");
     }
 }
