@@ -8,7 +8,7 @@ use crate::model::status_message::StatusMessage;
 pub fn not_found(status: Status, req: &Request) -> Json<StatusMessage> {
     Json(
         StatusMessage {
-            code: i32::from(status.code),
+            code: status.code,
             message: format!("we are unable to find the path :: {}", req.uri()),
         }
     )

@@ -1,7 +1,3 @@
-use deadpool_postgres::{Client, Manager};
-use deadpool_postgres::tokio_postgres::Error;
-use postgres::Row;
-use postgres::Statement;
 use rocket::serde::json::Json;
 use rocket::State;
 
@@ -21,12 +17,12 @@ pub async fn fetch_all_user(db_pool: &State<DbPool>) -> Result<Json<Vec<User>>, 
         .prepare_cached(&format!("SELECT * FROM {}", TABLE_NAME_USER))
         .await {
         Ok(statement_positive) => statement_positive,
-        Err(error) => return Err(Json(StatusMessage { code: 400, message: error.to_string() })),
+        Err(error) => return Err(Json(StatusMessage::bad_req(error.to_string()))),
     };
 
     let result_for_users = match client.query(&statement, &[]).await {
         Ok(result_positive) => result_positive,
-        Err(error) => return Err(Json(StatusMessage { code: 400, message: error.to_string() })),
+        Err(error) => return Err(Json(StatusMessage::bad_req(error.to_string()))),
     };
 
     let mut users = vec![];
@@ -35,23 +31,23 @@ pub async fn fetch_all_user(db_pool: &State<DbPool>) -> Result<Json<Vec<User>>, 
         let id: i64 = match row.try_get(0) {
             Ok(additional_field_positive) => match additional_field_positive {
                 Some(additional_field_positive_inner) => additional_field_positive_inner,
-                None => return Err(Json(StatusMessage { code: 400, message: "failed to get id ".to_string() }))
+                None => return Err(Json(StatusMessage::bad_req("failed to get id ".to_string().to_string()))),
             },
-            Err(error) => return Err(Json(StatusMessage { code: 400, message: error.to_string() })),
+            Err(error) => return Err(Json(StatusMessage::bad_req(error.to_string()))),
         };
         let name: String = match row.try_get(1) {
             Ok(additional_field_positive) => match additional_field_positive {
                 Some(additional_field_positive_inner) => additional_field_positive_inner,
-                None => return Err(Json(StatusMessage { code: 400, message: "failed to get name ".to_string() }))
+                None => return Err(Json(StatusMessage::bad_req("failed to get name ".to_string().to_string()))),
             },
-            Err(error) => return Err(Json(StatusMessage { code: 400, message: error.to_string() })),
+            Err(error) => return Err(Json(StatusMessage::bad_req(error.to_string()))),
         };
         let email: String = match row.try_get(2) {
             Ok(additional_field_positive) => match additional_field_positive {
                 Some(additional_field_positive_inner) => additional_field_positive_inner,
-                None => return Err(Json(StatusMessage { code: 400, message: "failed to get email ".to_string() }))
+                None => return Err(Json(StatusMessage::bad_req("failed to get email ".to_string().to_string()))),
             },
-            Err(error) => return Err(Json(StatusMessage { code: 400, message: error.to_string() })),
+            Err(error) => return Err(Json(StatusMessage::bad_req(error.to_string()))),
         };
 
         let user = User {
