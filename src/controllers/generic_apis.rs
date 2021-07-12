@@ -1,6 +1,12 @@
-use rand::Rng;
 use std::thread::sleep;
 use std::time::Duration;
+
+use rand::Rng;
+use rocket::http::Status;
+use rocket::response::content;
+use rocket::response::status;
+
+use crate::model::user::User;
 
 #[get("/")]
 pub fn index() -> &'static str {
@@ -32,4 +38,27 @@ pub async fn blocking_task() -> Result<String, String> {
 pub fn me(name: &str) -> String {
     let result_to_return = format!("hi, {}", name);
     result_to_return
+}
+
+#[get("/testNumberException/<number>")]
+pub fn test_number_exception(number: Result<u8, &str>) -> String {
+    match number {
+        Ok(number_positive) => "success".to_string(),
+        Err(error) => "error".to_string(),
+    }
+}
+
+#[get("/getAccepted")]
+pub fn get_accepted() -> status::Accepted<String> {
+    status::Accepted(Some(format!("id:")))
+}
+
+#[get("/getStatusCode")]
+pub fn get_status_code() -> status::Custom<content::Json<&'static str>> {
+    status::Custom(Status::ImATeapot, content::Json("{ \"hi\": \"world\" }"))
+}
+
+#[get("/getStatusCodeTwo")]
+pub fn get_status_code_dfvdfb() -> status::Custom<content::Json<User>> {
+    status::Custom(Status::BadRequest, content::Json(User { id: 34, name: "sagar".to_string(), email: "sgar@gmail.com".to_string() }))
 }
