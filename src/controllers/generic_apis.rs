@@ -62,3 +62,8 @@ pub fn get_status_code() -> status::Custom<content::Json<&'static str>> {
 pub fn get_status_code_dfvdfb() -> status::Custom<content::Json<User>> {
     status::Custom(Status::BadRequest, content::Json(User { id: 34, name: "sagar".to_string(), email: "sgar@gmail.com".to_string() }))
 }
+
+#[get("/getBlankArray")]
+pub fn get_blank_array() -> status::Custom<content::Json<Vec<User>>> {
+    status::Custom(Status::Ok, content::Json(vec![]))
+}
