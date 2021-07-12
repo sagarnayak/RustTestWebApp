@@ -4,8 +4,7 @@ extern crate tokio;
 
 use controllers::error_handlers::not_found;
 use controllers::routes;
-
-use crate::core::database::database_master;
+use database::database_master;
 
 mod core;
 mod tests;
@@ -14,6 +13,7 @@ mod controllers;
 mod model;
 
 mod config_controller;
+pub mod database;
 
 #[launch]
 fn rocket() -> _ {
