@@ -43,8 +43,8 @@ pub fn me(name: &str) -> String {
 #[get("/testNumberException/<number>")]
 pub fn test_number_exception(number: Result<u8, &str>) -> String {
     match number {
-        Ok(number_positive) => "success".to_string(),
-        Err(error) => "error".to_string(),
+        Ok(number_positive) => format!("success {}", number_positive),
+        Err(error) => format!("error : {}", error),
     }
 }
 
@@ -63,7 +63,7 @@ pub fn get_status_code_dfvdfb() -> status::Custom<content::Json<User>> {
     status::Custom(Status::BadRequest, content::Json(User { id: 34, name: "sagar".to_string(), email: "sgar@gmail.com".to_string() }))
 }
 
-#[get("/getBlankArray")]
+/*#[get("/getBlankArray")]
 pub fn get_blank_array() -> status::Custom<content::Json<Vec<User>>> {
     status::Custom(Status::Ok, content::Json(vec![]))
-}
+}*/

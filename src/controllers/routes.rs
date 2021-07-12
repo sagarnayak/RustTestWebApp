@@ -3,7 +3,6 @@ use rocket::Route;
 use crate::controllers::database_connected::get_all_user;
 use crate::controllers::generic_apis::blocking_task;
 use crate::controllers::generic_apis::get_accepted;
-use crate::controllers::generic_apis::get_blank_array;
 use crate::controllers::generic_apis::get_status_code;
 use crate::controllers::generic_apis::get_status_code_dfvdfb;
 use crate::controllers::generic_apis::index;
@@ -26,6 +25,5 @@ pub fn get_routes() -> Vec<Route> {
         get_status_code,
         test_number_exception,
         get_status_code_dfvdfb,
-        get_blank_array,
     ]
 }
