@@ -16,7 +16,7 @@ mod config_controller;
 pub mod database;
 
 #[launch]
-fn rocket() -> _ {
+ fn rocket() -> _ {
     rocket::build()
         .register("/", catchers![not_found])
         .mount("/", routes::get_routes())
