@@ -9,6 +9,7 @@ mod core;
 mod tests;
 
 mod controllers;
+mod contracts;
 mod model;
 
 mod config_controller;
