@@ -1,6 +1,4 @@
-use std::time::{SystemTime, UNIX_EPOCH};
-
-use chrono::{Duration, Utc};
+use chrono::Utc;
 use jsonwebtoken::{Algorithm, decode, DecodingKey, EncodingKey, Header, Validation};
 use jsonwebtoken::encode;
 use jsonwebtoken::errors::ErrorKind;
@@ -9,6 +7,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::config_controller::ConfigData;
 use crate::core::strings::FAILED_TO_GET_CONFIG_DATA;
+use crate::enums::access_policy::AccessPolicy;
 use crate::model::jwt_validation_req::JWTValidationRequest;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -16,6 +15,7 @@ struct Claims {
     sub: String,
     company: String,
     exp: usize,
+    access_policy: AccessPolicy,
 }
 
 #[get("/createJWT")]
@@ -30,6 +30,7 @@ pub fn create_jwt() -> String {
             sub: "sagar@gmail.com".to_owned(),
             company: "AGPayTech".to_owned(),
             exp: (Utc::now().timestamp() + 30) as usize,
+            access_policy: AccessPolicy::Admin,
         };
 
     let mut header = Header::default();
@@ -71,7 +72,12 @@ pub fn verify_jwt(jwt_validation_request: Json<JWTValidationRequest>) -> String 
         }
     };
 
-    println!("the token data is : {:?}", token_data);
+    println!("the token data is : {:?}", &token_data);
+
+    match token_data.claims.access_policy {
+        AccessPolicy::Admin => println!("this is an admin"),
+        _ => println!("i dont know you.")
+    }
 
     "done ".to_owned()
 }

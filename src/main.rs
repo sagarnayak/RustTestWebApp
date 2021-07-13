@@ -10,6 +10,7 @@ mod tests;
 
 mod controllers;
 mod contracts;
+mod enums;
 mod model;
 
 mod config_controller;
