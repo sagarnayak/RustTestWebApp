@@ -13,8 +13,14 @@ pub struct DatabaseConfig {
 }
 
 #[derive(Debug, Deserialize, Clone)]
+pub struct JWTConfig {
+    pub secret: String,
+}
+
+#[derive(Debug, Deserialize, Clone)]
 pub struct ConfigData {
     pub database: DatabaseConfig,
+    pub jwt: JWTConfig,
 }
 
 const CONFIG_FILE_PATH: &str = "./config/Default.toml";

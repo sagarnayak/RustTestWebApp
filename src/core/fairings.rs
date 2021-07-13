@@ -15,12 +15,9 @@ impl Fairing for CounterFairing {
     }
 
     // Increment the counter for `GET` and `POST` requests.
-    async fn on_request(&self, request: &mut Request<'_>, _: &mut Data<'_>) {
-        println!("got a req on {}", request.uri());
+    async fn on_request(&self, _: &mut Request<'_>, _: &mut Data<'_>) {
     }
 
-    async fn on_response<'r>(&self, request: &'r Request<'_>, response: &mut Response<'r>) {
-        println!("got a  req from :: {:?}", request.client_ip());
-        println!("sending response :: {:?}", response.status());
+    async fn on_response<'r>(&self, _: &'r Request<'_>, _: &mut Response<'r>) {
     }
 }

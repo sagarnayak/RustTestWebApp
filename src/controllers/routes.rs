@@ -13,6 +13,8 @@ use crate::controllers::generic_apis::me;
 use crate::controllers::generic_apis::test_number_exception;
 use crate::controllers::generic_apis::world;
 use crate::controllers::json_response::get_json_response;
+use crate::controllers::json_web_token_test::create_jwt;
+use crate::controllers::json_web_token_test::verify_jwt;
 use crate::controllers::passwords::hash_my_password;
 use crate::controllers::passwords::verify_hashed_password;
 
@@ -33,5 +35,7 @@ pub fn get_routes() -> Vec<Route> {
         hash_my_password,
         verify_hashed_password,
         authenticate_user,
+        create_jwt,
+        verify_jwt,
     ]
 }

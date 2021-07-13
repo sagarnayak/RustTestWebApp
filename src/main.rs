@@ -16,6 +16,6 @@ mod config_controller;
 pub mod database;
 
 #[launch]
-fn rocket_init() -> _ {
+fn init_main() -> _ {
     rocket()
 }
