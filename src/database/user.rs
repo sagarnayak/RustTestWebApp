@@ -56,7 +56,7 @@ impl UserContracts for User {
             let user = User {
                 id,
                 name,
-                email,
+                email_id: email,
             };
 
             users.push(user);

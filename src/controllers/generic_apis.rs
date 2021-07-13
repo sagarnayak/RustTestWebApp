@@ -61,13 +61,13 @@ pub fn get_status_code() -> status::Custom<content::Json<&'static str>> {
 
 #[get("/getStatusCodeTwo")]
 pub fn get_status_code_dfvdfb() -> status::Custom<content::Json<User>> {
-    status::Custom(Status::BadRequest, content::Json(User { id: 34, name: "sagar".to_string(), email: "sgar@gmail.com".to_string() }))
+    status::Custom(Status::BadRequest, content::Json(User { id: 34, name: "sagar".to_string(), email_id: "sgar@gmail.com".to_string() }))
 }
 
 #[get("/getBlankArray")]
 pub fn get_blank_array() -> status::Custom<rocket::serde::json::Json<Vec<User>>> {
     status::Custom(Status::Ok, Json(vec![
-        User { id: 1, name: "test user".to_string(), email: "test@testing.com".to_string() },
-        User { id: 2, name: "test user two".to_string(), email: "testtwo@testing.com".to_string() },
+        User { id: 1, name: "test user".to_string(), email_id: "test@testing.com".to_string() },
+        User { id: 2, name: "test user two".to_string(), email_id: "testtwo@testing.com".to_string() },
     ]))
 }

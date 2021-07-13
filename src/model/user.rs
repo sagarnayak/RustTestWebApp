@@ -6,10 +6,11 @@ use rocket::response::{self, Responder, Response};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct User {
     pub id: i64,
     pub name: String,
-    pub email: String,
+    pub email_id: String,
 }
 
 pub const TABLE_NAME_USER: &str = "users";

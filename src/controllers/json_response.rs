@@ -14,7 +14,7 @@ pub fn get_json_response() -> Result<Json<User>, Json<StatusMessage>> {
                 User {
                     id: 32,
                     name: "User name".to_string(),
-                    email: "email".to_string(),
+                    email_id: "email".to_string(),
                 }
             )
         )
