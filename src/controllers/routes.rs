@@ -12,6 +12,8 @@ use crate::controllers::generic_apis::me;
 use crate::controllers::generic_apis::test_number_exception;
 use crate::controllers::generic_apis::world;
 use crate::controllers::json_response::get_json_response;
+use crate::controllers::passwords::hash_my_password;
+use crate::controllers::passwords::verify_hashed_password;
 
 pub fn get_routes() -> Vec<Route> {
     routes![
@@ -27,5 +29,7 @@ pub fn get_routes() -> Vec<Route> {
         test_number_exception,
         get_status_code_dfvdfb,
         get_blank_array,
+        hash_my_password,
+        verify_hashed_password,
     ]
 }
