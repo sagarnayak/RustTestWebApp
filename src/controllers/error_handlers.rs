@@ -7,8 +7,10 @@ use crate::model::status_message::StatusMessage;
 
 #[catch(default)]
 pub fn not_found(status: Status, req: &Request) -> status::Custom<Json<StatusMessage>> {
+    println!("data :: {:?}", req.client_ip());
+    println!("data :: {:?}", req.headers());
     status::Custom(
-        Status::BadRequest,
+        status,
         Json(
             StatusMessage {
                 code: status.code,

@@ -10,7 +10,7 @@ use crate::model::user::User;
 
 #[post("/authenticate", data = "<user>")]
 pub fn authenticate_user(user: Json<User>, _key: ApiKey<'_>)
-    -> status::Custom<Result<String, StatusMessage>> {
+                         -> status::Custom<Result<String, StatusMessage>> {
     status::Custom(
         Status::Ok,
         Ok(format!("Hi {}, you are authenticated.", user.name)),
@@ -19,26 +19,20 @@ pub fn authenticate_user(user: Json<User>, _key: ApiKey<'_>)
 
 pub struct ApiKey<'r>(&'r str);
 
-#[derive(Debug)]
-pub enum ApiKeyError {
-    Missing,
-    Invalid,
-}
-
 #[rocket::async_trait]
 impl<'r> FromRequest<'r> for ApiKey<'r> {
-    type Error = ApiKeyError;
+    type Error = StatusMessage;
 
-    async fn from_request(req: &'r Request<'_>) -> Outcome<Self, Self::Error> {
+    async fn from_request(req: &'r Request<'_>) -> Outcome<Self, StatusMessage> {
         /// Returns true if `key` is a valid API key string.
         fn is_valid(key: &str) -> bool {
             key == "valid_api_key"
         }
 
         match req.headers().get_one("x-api-key") {
-            None => Outcome::Failure((Status::BadRequest, ApiKeyError::Missing)),
+            None => Outcome::Failure((Status::Unauthorized, StatusMessage { code: 401, message: "You are not authorised".to_string() })),
             Some(key) if is_valid(key) => Outcome::Success(ApiKey(key)),
-            Some(_) => Outcome::Failure((Status::BadRequest, ApiKeyError::Invalid)),
+            Some(_) => Outcome::Failure((Status::Unauthorized, StatusMessage { code: 401, message: "You are not authorised".to_string() })),
         }
     }
 }
