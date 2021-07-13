@@ -34,7 +34,7 @@ pub fn hash_my_password(
     status::Custom(Status::Ok, Ok(hashed))
 }
 
-#[post("/verifyHashedMyPassword", data = "<password_verification_request>")]
+#[post("/verifyHashedPassword", data = "<password_verification_request>")]
 pub fn verify_hashed_password(
     password_verification_request: Json<PasswordVerificationRequest>,
 ) -> status::Custom<Result<String, StatusMessage>> {
