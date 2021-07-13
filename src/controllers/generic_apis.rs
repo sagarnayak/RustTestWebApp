@@ -5,6 +5,7 @@ use rand::Rng;
 use rocket::http::Status;
 use rocket::response::content;
 use rocket::response::status;
+use rocket::serde::json::Json;
 
 use crate::model::user::User;
 
@@ -63,7 +64,7 @@ pub fn get_status_code_dfvdfb() -> status::Custom<content::Json<User>> {
     status::Custom(Status::BadRequest, content::Json(User { id: 34, name: "sagar".to_string(), email: "sgar@gmail.com".to_string() }))
 }
 
-/*#[get("/getBlankArray")]
-pub fn get_blank_array() -> status::Custom<content::Json<Vec<User>>> {
-    status::Custom(Status::Ok, content::Json(vec![]))
-}*/
+#[get("/getBlankArray")]
+pub fn get_blank_array() -> status::Custom<rocket::serde::json::Json<Vec<User>>> {
+    status::Custom(Status::Ok, Json(vec![User { id: 123, name: "test user".to_string(), email: "test@testing.com".to_string() }]))
+}
