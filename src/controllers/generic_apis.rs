@@ -66,5 +66,8 @@ pub fn get_status_code_dfvdfb() -> status::Custom<content::Json<User>> {
 
 #[get("/getBlankArray")]
 pub fn get_blank_array() -> status::Custom<rocket::serde::json::Json<Vec<User>>> {
-    status::Custom(Status::Ok, Json(vec![User { id: 123, name: "test user".to_string(), email: "test@testing.com".to_string() }]))
+    status::Custom(Status::Ok, Json(vec![
+        User { id: 1, name: "test user".to_string(), email: "test@testing.com".to_string() },
+        User { id: 2, name: "test user two".to_string(), email: "testtwo@testing.com".to_string() },
+    ]))
 }
