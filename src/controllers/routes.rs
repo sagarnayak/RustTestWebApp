@@ -1,5 +1,6 @@
 use rocket::Route;
 
+use crate::controllers::authentication_with_guard::authenticate_user;
 use crate::controllers::database_connected::get_all_user;
 use crate::controllers::generic_apis::blocking_task;
 use crate::controllers::generic_apis::get_accepted;
@@ -31,5 +32,6 @@ pub fn get_routes() -> Vec<Route> {
         get_blank_array,
         hash_my_password,
         verify_hashed_password,
+        authenticate_user,
     ]
 }
