@@ -7,6 +7,7 @@ use rocket::response::{self, Responder, Response};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct StatusMessage {
     pub code: u16,
     pub message: String,
