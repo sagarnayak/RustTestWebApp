@@ -6,7 +6,6 @@ use rocket::serde::json::Json;
 use serde::{Deserialize, Serialize};
 
 use crate::config_controller::ConfigData;
-use crate::core::strings::FAILED_TO_GET_CONFIG_DATA;
 use crate::enums::access_policy::AccessPolicy;
 use crate::model::jwt_validation_req::JWTValidationRequest;
 
@@ -20,7 +19,7 @@ struct Claims {
 
 #[get("/createJWT")]
 pub fn create_jwt() -> String {
-    let config = ConfigData::new().expect(FAILED_TO_GET_CONFIG_DATA);
+    let config = ConfigData::new();
     let jwt_config = config.jwt;
 
     let key = jwt_config.secret.as_bytes();
@@ -50,7 +49,7 @@ pub fn create_jwt() -> String {
 
 #[post("/verifyJWT", data = "<jwt_validation_request>")]
 pub fn verify_jwt(jwt_validation_request: Json<JWTValidationRequest>) -> String {
-    let config = ConfigData::new().expect(FAILED_TO_GET_CONFIG_DATA);
+    let config = ConfigData::new();
     let jwt_config = config.jwt;
 
     let key = jwt_config.secret.as_bytes();

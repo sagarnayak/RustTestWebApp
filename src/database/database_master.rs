@@ -3,13 +3,12 @@ use tokio_postgres::NoTls;
 
 use crate::config_controller::ConfigData;
 use crate::database::db_pool::DbPool;
-use crate::core::strings::FAILED_TO_GET_CONFIG_DATA;
 use crate::model::status_message::StatusMessage;
 use rocket::serde::json::Json;
 use rocket::State;
 
 fn get_pool() -> Pool {
-    let config = ConfigData::new().expect(FAILED_TO_GET_CONFIG_DATA);
+    let config = ConfigData::new();
     let database = config.database;
 
     let host = database.host;

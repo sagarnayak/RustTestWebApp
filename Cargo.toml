@@ -10,7 +10,6 @@ authors = ["sagar nayak <snkumar.nayak@gmail.com>"]
 rocket = { version = "0.5.0-rc.1", features = ["json"] }
 rand = "0.8.4"
 serde = { version = "1.0.64", features = ["derive"] }
-config = "0.11.0"
 postgres = "0.19.1"
 deadpool-postgres = "0.9.0"
 tokio = "1.8.1"
