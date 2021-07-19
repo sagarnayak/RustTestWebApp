@@ -57,11 +57,11 @@ impl ConfigData {
             }
         };
 
-        let s = match  s.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX, env))) {
+        let s = match  s.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX_TWO, env))) {
             Ok(positive) => positive,
             Err(error) => {
                 println!("getting an error at CONFIG_FILE_PREFIX insertion {}. trying to insert alternative path.", error.to_string());
-                match  s.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX_TWO, env))) {
+                match  s.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX, env))) {
                     Ok(positive_two) => positive_two,
                     Err(error_two) => {
                         println!("getting an error at CONFIG_FILE_PREFIX_TWO insertion {}", error_two.to_string().clone());
