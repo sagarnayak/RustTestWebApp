@@ -31,5 +31,3 @@ assets = [
     ["debian/web_service", "/lib/systemd/system/web_service", "644"],
 ]
 maintainer-scripts = "debian/scripts"
-
-[dependencies]
