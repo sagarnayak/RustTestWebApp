@@ -26,19 +26,43 @@ pub struct ConfigData {
 const CONFIG_FILE_PATH: &str = "./config/Default.toml";
 const CONFIG_FILE_PREFIX: &str = "./config/";
 
+const CONFIG_FILE_PATH_TWO: &str = "/home/ubuntu/rust_configs/config/Default.toml";
+const CONFIG_FILE_PREFIX_TWO: &str = "/home/ubuntu/rust_configs/config/";
+
 impl ConfigData {
     pub fn new() -> Result<Self, ConfigError> {
         let env = std::env::var("RUN_ENV").unwrap_or_else(|_| "Development".into());
-        let mut s = Config::new();
-        s.set("env", env.clone())?;
+        println!("the environment selected is {}", &env);
 
-        s.merge(File::with_name(CONFIG_FILE_PATH))?;
+        let mut s = Config::new();
+        let s = match s.set("env", env.clone()) {
+            Ok(positive) => positive,
+            Err(error) => {
+                println!("getting an error at the env cloning ..{}", error.to_string().clone());
+                return Err(ConfigError::NotFound(error.to_string()));
+            }
+        };
+
+        let s = match s.merge(File::with_name(CONFIG_FILE_PATH)) {
+            Ok(positive) => positive,
+            Err(error) => {
+                println!("getting an error at CONFIG_FILE_PATH insertion {}. trying to insert alternative path.", error.to_string());
+                match s.merge(File::with_name(CONFIG_FILE_PATH_TWO)) {
+                    Ok(positive_two) => positive_two,
+                    Err(error_two) => {
+                        println!("getting an error at CONFIG_FILE_PATH_TWO insertion {}", error_two.to_string().clone());
+                        return Err(ConfigError::NotFound(error_two.to_string()));
+                    }
+                }
+            }
+        };
+
         s.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX, env)))?;
 
         // This makes it so "EA_SERVER__PORT overrides server.port
         s.merge(Environment::with_prefix("ea").separator("__"))?;
 
-        s.try_into()
+        s.clone().try_into()
     }
 }
 
