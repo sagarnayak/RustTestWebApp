@@ -19,3 +19,18 @@ bcrypt = "0.10.0"
 jsonwebtoken = "7.2.0"
 chrono = "0.4.19"
 clokwerk = "0.3.5"
+
+[package.metadata.deb]
+maintainer = "sagar nayak <snkumar.nayak@gmail.com>"
+copyright = "2017, cargo-deb developers."
+license-file = ["LICENSE", "2"]
+extended-description = "rust text web app"
+depends = "$auto"
+section = "utils"
+priority = "optional"
+assets = [
+#    ["target/release/example", "usr/bin/", "755"],
+]
+changelog = "changelog"
+default-features = false
+features = ["example_debian_build"]
