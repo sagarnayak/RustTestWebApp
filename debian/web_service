@@ -1,13 +1,13 @@
 [Unit]
-AssertPathExists=/usr/bin/hello
+AssertPathExists=/usr/bin/web_service
 
 [Service]
 WorkingDirectory=~
-ExecStart=/usr/bin/hello
+ExecStart=/usr/bin/web_service
 Restart=always
 PrivateTmp=true
 NoNewPrivileges=true
 
 [Install]
-Alias=hello
+Alias=web_service
 WantedBy=default.target

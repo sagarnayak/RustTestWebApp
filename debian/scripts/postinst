@@ -9,7 +9,7 @@ then
 	# Enables the unit on first installation, creates new
 	# symlinks on upgrades if the unit file has changed.
 	deb-systemd-helper enable web_service > /dev/null || true
-	deb-systemd-invoke start hello
+	deb-systemd-invoke start web_service
 else
 	# Update the statefile to add new symlinks (if any), which need to be
 	# cleaned up on purge. Also remove old symlinks.
