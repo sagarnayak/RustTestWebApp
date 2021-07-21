@@ -17,6 +17,7 @@ use crate::controllers::json_web_token_test::create_jwt;
 use crate::controllers::json_web_token_test::verify_jwt;
 use crate::controllers::passwords::hash_my_password;
 use crate::controllers::passwords::verify_hashed_password;
+use crate::controllers::multi_thread_task::start_multi_thread;
 
 pub fn get_routes() -> Vec<Route> {
     routes![
@@ -37,5 +38,6 @@ pub fn get_routes() -> Vec<Route> {
         authenticate_user,
         create_jwt,
         verify_jwt,
+        start_multi_thread,
     ]
 }
