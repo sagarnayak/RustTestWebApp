@@ -9,7 +9,7 @@ pub fn schedule() {
     let mut scheduler = Scheduler::with_tz(Utc);
 
     scheduler.every(
-        Seconds(10)
+        Seconds(60)
     )
         .run(
             || {
